@@ -1,4 +1,4 @@
-<?php 
+<?php
 class Commenting_Plugin extends Pimcore_API_Plugin_Abstract implements Pimcore_API_Plugin_Interface
 {
     public static function install()
@@ -42,7 +42,7 @@ class Commenting_Plugin extends Pimcore_API_Plugin_Abstract implements Pimcore_A
         $result = null;
         try {
             $result = Pimcore_API_Plugin_Abstract::getDb()->describeTable("plugin_commenting_comments");
-        } catch (Zend_Db_Statement_Exception $e) {
+        } catch (Zend_Db_Adapter_Exception $e) {
         }
         return !empty($result);
     }
