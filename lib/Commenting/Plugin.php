@@ -106,11 +106,10 @@ class Commenting_Plugin extends Pimcore_API_Plugin_Abstract implements Pimcore_A
      * @param integer $date
      * @param Element_Interface $target
      * @param Object_Abstract $user
-     * @param string $metadata
+     * @param array $metadata
      */
-    public static function postComment($comment, $date, $target, $user = null, $metadata = null)
+    public static function postComment($comment, $date, $target, $user = null, array $metadata = array())
     {
-
         $type = self::getTypeFromTarget($target);
 
         if (!empty($type)) {

@@ -47,13 +47,12 @@ class Resource_Comment extends Pimcore_Model_Abstract
     public $type;
 
     /**
-     * @var string
+     * @var array
      */
     public $metadata;
 
     public function getResource()
     {
-
         if (!$this->resource) {
             $this->initResource("Resource_Comment");
         }
@@ -135,19 +134,22 @@ class Resource_Comment extends Pimcore_Model_Abstract
     }
 
     /**
-     * @param string $metadata
+     * @param array $metadata
      */
     public function setMetadata($metadata)
     {
+        if(is_array($metadata)) {
+            $metadata = serialize($metadata);
+        }
         $this->metadata = $metadata;
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getMetadata()
     {
-        return $this->metadata;
+        return new ArrayObject(unserialize($this->metadata), ArrayObject::ARRAY_AS_PROPS);
     }
 
     /**

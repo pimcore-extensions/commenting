@@ -66,7 +66,7 @@ class Resource_Comment_Resource_Mysql extends Pimcore_Model_Resource_Mysql_Abstr
 				"data" => $this->model->getData(),
 				"date" => $this->model->getDate(),
 				"type" => $this->model->getType(),
-                "metadata" => $this->model->getMetadata()
+                "metadata" => serialize($this->model->getMetadata())
 			));
 
 			$this->model->setId($this->db->lastInsertId());
@@ -93,8 +93,8 @@ class Resource_Comment_Resource_Mysql extends Pimcore_Model_Resource_Mysql_Abstr
 			$data["date"]=$this->model->getDate();
 			$data["type"]= $this->model->getType();
             $data["data"] = $this->model->getData();
-            $data["metadata"] = $this->model->getMetadata();
-			
+            $data["metadata"] = serialize($this->model->getMetadata());
+
 			$this->db->update("plugin_commenting_comments",$data,"id='".$this->model->getId()."'");
 
 		}
