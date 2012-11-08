@@ -2,17 +2,14 @@
 
 class Commenting_AdminController extends Pimcore_Controller_Action_Admin
 {
-
     public function commentsAction()
     {
-
         if ($this->_getParam('xaction') == "destroy") {
             $id = $this->_getParam("comments");
             $id = str_replace('"', '', $id);
             Commenting_Plugin::deleteComment($id);
             $results["success"] = true;
             $results["comments"] = "";
-
         } else {
 
             $id = $this->_getParam("objectid");
@@ -55,7 +52,4 @@ class Commenting_AdminController extends Pimcore_Controller_Action_Admin
         $this->removeViewRenderer();
     }
 
-
 }
-
-

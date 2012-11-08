@@ -1,14 +1,14 @@
-<?php 
+<?php
 
 class Resource_Comment_Resource_Mysql extends Pimcore_Model_Resource_Mysql_Abstract {
-	
+
 	/**
      * Contains all valid columns in the database table
      *
      * @var array
      */
 	protected $validColumns = array();
-	
+
 	/**
 	 * Get the valid columns from the database
 	 *
@@ -20,10 +20,10 @@ class Resource_Comment_Resource_Mysql extends Pimcore_Model_Resource_Mysql_Abstr
 			$this->validColumns[] = $d["Field"];
 		}
 	}
-	
+
 	/**
 	 * Get the data for the comment from database for the given id
-	 * 
+	 *
 	 * @param integer $id
 	 * @return Object_Comment
 	 */
@@ -32,27 +32,27 @@ class Resource_Comment_Resource_Mysql extends Pimcore_Model_Resource_Mysql_Abstr
 		try {
 			$data = $this->db->fetchRow("SELECT * FROM plugin_commenting_comments WHERE id = ?",$id);
 			$this->assignVariablesToModel($data);
-			
-		} 
+
+		}
 		catch (Exception $e){}
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Get the data for the object from database for the given name
-	 * 
+	 *
 	 * @param string $name
 	 * @return void
 	 */
 	public function save () {
-	
+
 		if($this->model->getId()) {
 			return $this->model->update();
 		}
 		return $this->create();
 	}
-	
+
 	/**
 	 * Create a new record for the object in database
 	 *
@@ -68,21 +68,21 @@ class Resource_Comment_Resource_Mysql extends Pimcore_Model_Resource_Mysql_Abstr
 				"type" => $this->model->getType(),
                 "metadata" => $this->model->getMetadata()
 			));
-			
+
 			$this->model->setId($this->db->lastInsertId());
-			
+
 			return $this->save();
-			
+
 		}
 		catch (Exception $e) {
 			throw $e;
 		}
-		
+
 	}
-	
+
 	/**
 	 * Save changes to database, it's an good idea to use save() instead
-	 * 
+	 *
 	 * @return void
 	 */
 	public function update () {
@@ -96,13 +96,13 @@ class Resource_Comment_Resource_Mysql extends Pimcore_Model_Resource_Mysql_Abstr
             $data["metadata"] = $this->model->getMetadata();
 			
 			$this->db->update("plugin_commenting_comments",$data,"id='".$this->model->getId()."'");
-			
+
 		}
 		catch (Exception $e) {
 			throw $e;
 		}
 	}
-	
+
 	/**
 	 * Deletes object from database
 	 *
@@ -118,10 +118,10 @@ class Resource_Comment_Resource_Mysql extends Pimcore_Model_Resource_Mysql_Abstr
 		}
 
 	}
-	
+
 	/**
 	 * Deletes all comments for the current target
-	 * 
+	 *
 	 * @return void
 	 */
 	public function deleteAllForTarget(){
@@ -134,13 +134,9 @@ class Resource_Comment_Resource_Mysql extends Pimcore_Model_Resource_Mysql_Abstr
 				catch (Exception $e) {
 					logger::log(get_class($this).": Could not delete comments for target id [".$this->model->getCommentingTargetId()."]");
 					throw $e;
-				}	
+				}
 			}
 		}
 	}
-	
+
 }
-
-
-
-?>

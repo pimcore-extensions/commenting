@@ -1,4 +1,5 @@
 <?php
+
 class Commenting_Plugin extends Pimcore_API_Plugin_Abstract implements Pimcore_API_Plugin_Interface
 {
     public static function install()
@@ -21,7 +22,6 @@ class Commenting_Plugin extends Pimcore_API_Plugin_Abstract implements Pimcore_A
             $statusMessage = "Commenting Plugin could not be installed";
         }
         return $statusMessage;
-
     }
 
     public static function uninstall()
@@ -35,17 +35,16 @@ class Commenting_Plugin extends Pimcore_API_Plugin_Abstract implements Pimcore_A
             $statusMessage = "Commenting Plugin could not be uninstalled";
         }
         return $statusMessage;
-
     }
 
     public static function isInstalled()
     {
-        $result = null;
         try {
-            $result = Pimcore_API_Plugin_Abstract::getDb()->describeTable("plugin_commenting_comments");
+            Pimcore_API_Plugin_Abstract::getDb()->describeTable("plugin_commenting_comments");
+            return true;
         } catch (Zend_Db_Adapter_Exception $e) {
+            return false;
         }
-        return !empty($result);
     }
 
     public static function getTranslationFileDirectory()
@@ -54,7 +53,6 @@ class Commenting_Plugin extends Pimcore_API_Plugin_Abstract implements Pimcore_A
     }
 
     /**
-     *
      * @param string $language
      * @return string path to the translation file relative to plugin direcory
      */
@@ -65,9 +63,7 @@ class Commenting_Plugin extends Pimcore_API_Plugin_Abstract implements Pimcore_A
         } else {
             return "/Commenting/texts/en.csv";
         }
-
     }
-
 
     public function preDeleteDocument(Document $document)
     {
@@ -90,11 +86,9 @@ class Commenting_Plugin extends Pimcore_API_Plugin_Abstract implements Pimcore_A
      */
     private function deleteAllForTarget($target)
     {
-
         $resourceComment = new Resource_Comment();
         $resourceComment->setCommentingTarget($target);
         $resourceComment->deleteAllForTarget();
-
     }
 
     /**
@@ -107,9 +101,7 @@ class Commenting_Plugin extends Pimcore_API_Plugin_Abstract implements Pimcore_A
         $comment->delete();
     }
 
-
     /**
-     *
      * @param integer $comment
      * @param integer $date
      * @param Element_Interface $target
@@ -135,16 +127,12 @@ class Commenting_Plugin extends Pimcore_API_Plugin_Abstract implements Pimcore_A
         } else {
             logger::log("Commenting_Plugin: Could not post comment, unknown resource", Zend_Log::ERR);
         }
-
     }
 
-
     /**
-     *
-     *
      * @param Element_Interface $target
-     * @param string $order asc | desc
      * @param string[]|string $orderkey an array of the following string(s) userId, date, metadata, data, Id
+     * @param string $order asc | desc
      * @return Resource_Comment[] $comments
      */
     public static function getComments($target, $orderkey = null, $order = null)

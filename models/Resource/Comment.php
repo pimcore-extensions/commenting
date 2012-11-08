@@ -1,8 +1,6 @@
 <?php
 class Resource_Comment extends Pimcore_Model_Abstract
 {
-
-
     /**
      * @var integer
      */
@@ -243,13 +241,9 @@ class Resource_Comment extends Pimcore_Model_Abstract
     {
         if ($this->getId()) {
             $this->update();
-        }
-        else {
-
-
+        } else {
             $this->getResource()->create();
             $this->update();
-
         }
     }
 
