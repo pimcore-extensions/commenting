@@ -3,7 +3,7 @@ class Commenting_Plugin extends Pimcore_API_Plugin_Abstract implements Pimcore_A
 {
     public static function install()
     {
-        Pimcore_API_Plugin_Abstract::getDb()->exec(
+        Pimcore_API_Plugin_Abstract::getDb()->getResource()->query(
             "CREATE TABLE IF NOT EXISTS `plugin_commenting_comments` (
                 `Id` INT NOT NULL AUTO_INCREMENT,
                 `type` ENUM( 'object', 'asset', 'document' ) NOT NULL ,
@@ -13,7 +13,7 @@ class Commenting_Plugin extends Pimcore_API_Plugin_Abstract implements Pimcore_A
                 `metadata` TEXT NULL ,
                 `date` INT NULL ,
                 PRIMARY KEY  (`id`)
-                ) ENGINE=MyISAM DEFAULT CHARSET=utf8;");
+            ) ENGINE=MyISAM DEFAULT CHARSET=utf8;");
 
         if (self::isInstalled()) {
             $statusMessage = "Commenting Plugin successfully installed.";
@@ -26,7 +26,8 @@ class Commenting_Plugin extends Pimcore_API_Plugin_Abstract implements Pimcore_A
 
     public static function uninstall()
     {
-        Pimcore_API_Plugin_Abstract::getDb()->exec("DROP TABLE `plugin_commenting_comments`");
+        Pimcore_API_Plugin_Abstract::getDb()->getResource()->query(
+            "DROP TABLE `plugin_commenting_comments`");
 
         if (!self::isInstalled()) {
             $statusMessage = "Commenting Plugin successfully uninstalled.";
