@@ -136,28 +136,22 @@ class Commenting_Plugin extends Pimcore_API_Plugin_Abstract implements Pimcore_A
      */
     public static function getComments($target, $orderkey = null, $order = null)
     {
-
         if ($target instanceof Element_Interface) {
-            $type = self::getTypeFromTarget($target);
-            $commentList = new Resource_Comment_List();
-            $commentList->setCondition("commentingTargetId = " . $target->getId() . " AND type = '" . $type . "'");
-            if (empty($orderkey)) {
-                $orderkey = "date";
+            $list = new Resource_Comment_List($target);
+            if (!empty($orderkey)) {
+                $list->setOrderKey($orderKey);
             }
-            $commentList->setOrderKey($orderkey);
-            if (!strtolower($order) == "asc" and !strtolower($order) == "desc") {
-                $order = "desc";
+            if (strtolower($order) == "asc" || strtolower($order) == "desc") {
+                $list->setOrder($order);
             }
-            $commentList->setOrder($order);
-            return $commentList->load();
+            return $list->load();
         }
     }
 
     /**
-     *
      * @param Element_Interface $target
      */
-    private static function getTypeFromTarget($target)
+    public static function getTypeFromTarget(Element_Interface $target)
     {
         $type = "";
         if ($target instanceof Document) {
