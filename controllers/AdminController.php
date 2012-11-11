@@ -30,16 +30,20 @@ class Commenting_AdminController extends Pimcore_Controller_Action_Admin
             if (is_array($comments)) {
                 foreach ($comments as $comment) {
 
-                    $user = $comment->getUser();
-                    if ($user instanceof Object_Abstract) {
-                        $userPath = $user->getFullPath();
-                    }
                     $shorttext = $comment->getData();
                     if (strlen($shorttext) > 50) {
                         $shorttext = substr($shorttext, 0, 50) . "...";
                     }
+                    $user = $comment->getUser();
 
-                    $results["comments"][] = array("c_id" => $comment->getId(), "c_shorttext" => $shorttext, "c_text" => $comment->getData(), "c_user" => $userPath, "c_created" => $comment->getDate());
+                    $results["comments"][] = array(
+                        "c_id" => $comment->getId(),
+                        "c_shorttext" => $shorttext,
+                        "c_text" => $comment->getData(),
+                        "c_user" => ($user instanceof Object_Abstract)
+                            ? $user->getFullPath()
+                            : $comment->getMetadata()->name . ' (' . $comment->getMetadata()->email . ')',
+                        "c_created" => $comment->getDate()->getTimestamp());
                 }
             }
 

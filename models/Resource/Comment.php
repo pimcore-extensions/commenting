@@ -93,12 +93,22 @@ class Resource_Comment extends Pimcore_Model_Abstract
     }
 
     /**
-     * @return integer $date
+     * @return Zend_Date $date
      */
     public function getDate()
     {
+        return new Zend_Date($this->date, Zend_Date::TIMESTAMP);
+    }
 
-        return $this->date;
+    /**
+     * @param integer|Zend_Date $date
+     */
+    public function setDate($date)
+    {
+        if($date instanceof Zend_Date) {
+            $date = $date->getTimestamp();
+        }
+        $this->date = $date;
     }
 
     /**
@@ -215,15 +225,6 @@ class Resource_Comment extends Pimcore_Model_Abstract
     {
         $this->commentingTarget = $commentingTarget;
         $this->commentingTargetId = $commentingTarget->getId();
-    }
-
-    /**
-     *
-     * @param integer $date
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
     }
 
     /**

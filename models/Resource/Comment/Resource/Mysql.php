@@ -32,7 +32,6 @@ class Resource_Comment_Resource_Mysql extends Pimcore_Model_Resource_Mysql_Abstr
 		try {
 			$data = $this->db->fetchRow("SELECT * FROM plugin_commenting_comments WHERE id = ?",$id);
 			$this->assignVariablesToModel($data);
-
 		}
 		catch (Exception $e){}
 	}
@@ -90,7 +89,7 @@ class Resource_Comment_Resource_Mysql extends Pimcore_Model_Resource_Mysql_Abstr
 			$data["id"]=$this->model->getId();
 			$data["commentingTargetId"]=$this->model->getCommentingTargetId();
 			$data["userId"]=$this->model->getUserId();
-			$data["date"]=$this->model->getDate();
+			$data["date"]=$this->model->getDate()->getTimestamp();
 			$data["type"]= $this->model->getType();
             $data["data"] = $this->model->getData();
             $data["metadata"] = serialize($this->model->getMetadata());
