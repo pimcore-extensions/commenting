@@ -15,32 +15,23 @@ pimcore.plugin.commenting = Class.create(pimcore.plugin.admin, {
         //TODO: hide all commenting tabs
     },
 
+    addCommentsTab: function(object, type) {
+        var commenttab = new pimcore.plugin.commenting.comments(object, type);
+        object.tab.items.items[1].insert(object.tab.items.items[1].items.length, commenttab.getLayout());
+        object.tab.items.items[1].doLayout();
+        pimcore.layout.refresh();
+    },
+
     postOpenObject: function(object, type) {
-
-        var items = object.tab.items.items[1].items;
-        var commenttab = new pimcore.plugin.commenting.comments(object, type);
-        object.tab.items.items[1].insert(object.tab.items.items[1].items.length, commenttab.getLayout());
-        object.tab.items.items[1].doLayout();
-        pimcore.layout.refresh();
-
+        this.addCommentsTab(object, type);
     },
+
     postOpenDocument: function(object, type) {
-
-        var items = object.tab.items.items[1].items;
-        var commenttab = new pimcore.plugin.commenting.comments(object, type);
-        object.tab.items.items[1].insert(object.tab.items.items[1].items.length, commenttab.getLayout());
-        object.tab.items.items[1].doLayout();
-        pimcore.layout.refresh();
-
+        this.addCommentsTab(object, type);
     },
+
     postOpenAsset: function(object, type) {
-
-        var items = object.tab.items.items[1].items;
-        var commenttab = new pimcore.plugin.commenting.comments(object, type);
-        object.tab.items.items[1].insert(object.tab.items.items[1].items.length, commenttab.getLayout());
-        object.tab.items.items[1].doLayout();
-        pimcore.layout.refresh();
-
+        this.addCommentsTab(object, type);
     }
 
 });
