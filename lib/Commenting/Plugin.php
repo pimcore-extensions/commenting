@@ -134,11 +134,11 @@ class Commenting_Plugin extends Pimcore_API_Plugin_Abstract implements Pimcore_A
      * @param string $order asc | desc
      * @return Resource_Comment[] $comments
      */
-    public static function getComments($target, $orderkey = null, $order = null)
+    public static function getComments($target, $orderKey = null, $order = null)
     {
         if ($target instanceof Element_Interface) {
             $list = new Resource_Comment_List($target);
-            if (!empty($orderkey)) {
+            if (!empty($orderKey)) {
                 $list->setOrderKey($orderKey);
             }
             if (strtolower($order) == "asc" || strtolower($order) == "desc") {
