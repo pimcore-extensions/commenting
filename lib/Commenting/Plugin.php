@@ -42,7 +42,7 @@ class Commenting_Plugin extends Pimcore_API_Plugin_Abstract implements Pimcore_A
         try {
             Pimcore_API_Plugin_Abstract::getDb()->describeTable("plugin_commenting_comments");
             return true;
-        } catch (Zend_Db_Adapter_Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
     }
